@@ -1,0 +1,32 @@
+.item {
+  position: relative;
+  padding: 10px 25px;
+  display: flex;
+  align-items: center;
+  cursor: move;
+
+  &__img {
+    border-radius: 50%;
+  }
+
+  &__name {
+    margin-left: 10px;
+    color: #130b1a;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+  }
+
+  &__close-btn {
+    position: absolute;
+    right: 25px;
+    padding: 0;
+    border: 0;
+    height: 26px;
+    width: 26px;
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE4cHgiIHdpZHRoPSIxOHB4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0iIzAwMDAwMCI+CiA8cGF0aCBkPSJtMzggMjZoLTEydjEyaC00di0xMmgtMTJ2LTRoMTJ2LTEyaDR2MTJoMTJ2NHoiLz4KIDxwYXRoIGQ9Im0wIDBoNDh2NDhoLTQ4eiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K);
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBoZWlnaHQ9IjE4cHgiIHdpZHRoPSIxOHB4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0iIzAwMDAwMCI+CiA8cGF0aCBkPSJtMzggMjZoLTEydjEyaC00di0xMmgtMTJ2LTRoMTJ2LTEyaDR2MTJoMTJ2NHoiLz4KIDxwYXRoIGQ9Im0wIDBoNDh2NDhoLTQ4eiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4K);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+}
