@@ -68,7 +68,7 @@ export default function auth() {
             const name = document.querySelector('.header__name');
             name.innerHTML = me.first_name + ' ' + me.last_name;
 
-            const friends = await callARI('friends.get', {fields: 'photo_50', order: 'name'});
+            const friends = await callARI('friends.get', {fields: 'photo_50'});
 
             const list = document.querySelector('.your-friends__list');
 

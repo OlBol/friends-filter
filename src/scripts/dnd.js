@@ -3,26 +3,42 @@ export default class {
         this.list = document.querySelector('.js-list');
         this.items = this.list.querySelectorAll('.js-item');
         this.dropZone = document.querySelector('.js-drop-zone');
+        this.toggleBtn = document.querySelectorAll('.js-toggle-btn');
         this.dragSrcEl;
-        this.parentZone;
 
         this.init();
     }
 
     init() {
-        // for (let zone of [this.list, this.dropZone]) {
-        //     this.addDnDHandlers(zone);
-        // }
-        this.addDnDHandlers(this.list, this.dropZone);
+        this._addDnDHandlers(this.list, this.dropZone);
+
+        for (const btn of this.toggleBtn) {
+            btn.addEventListener('click', () => {
+                const dropElem = btn.closest('li');
+
+                if (btn.classList.contains('in-list')) {
+                    btn.classList.remove('in-list');
+                    this._removeItemFromList(dropElem);
+                } else {
+                    btn.classList.add('in-list');
+                    this._addItemToList(dropElem);
+                }
+            });
+        }
     }
 
-    addDnDHandlers(source, target) {source.addEventListener('dragstart', (e) => {
-        if (e.target.classList.contains('item')) {
-            this.dragSrcEl = e.target;
-        } else {
-            this.dragSrcEl = e.target.closest('li');
-        }
-        e.dataTransfer.setData('text/html', this.dragSrcEl.outerHTML);
+    /**
+     * Навешивает события drag and drop на все элементы списка друзей
+     * @param source {HTMLElement} - полный список друзей
+     * @param target {HTMLElement} - новый список
+     */
+    _addDnDHandlers(source, target) {
+        source.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('item')) {
+                this.dragSrcEl = e.target;
+            } else {
+                this.dragSrcEl = e.target.closest('li');
+            }
         });
 
         source.addEventListener('dragover', (e) => {
@@ -33,18 +49,26 @@ export default class {
             e.preventDefault();
         });
 
-        target.addEventListener('drop', (e) => {
-            if(e) {
-                // const dropHTML = e.dataTransfer.getData('text/html');
-                const dropElem = this.dragSrcEl;
-                // target.insertAdjacentHTML('beforeend', dropHTML);
-                dropElem.setAttribute('draggable', 'false');
-                dropElem.classList.add('item--in-list');
-                target.append(dropElem);
+        target.addEventListener('drop', () => this._addItemToList(this.dragSrcEl));
+    }
 
-                // this.dragSrcEl.remove();
-                // addDnDHandlers(this.previousSibling)
-            }
-        });
+    /**
+     * Добавляет перемещаемый элемент в новый список
+     * @param dropElem {HTMLElement} - элемент списка
+     */
+    _addItemToList(dropElem) {
+        dropElem.setAttribute('draggable', 'false');
+        dropElem.classList.add('item--in-list');
+        this.dropZone.append(dropElem);
+    }
+
+    /**
+     * Удаляет перемещаемый элемент из нового списка
+     * @param dropElem {HTMLElement} - элемент списка
+     */
+    _removeItemFromList(dropElem) {
+        dropElem.setAttribute('draggable', 'true');
+        dropElem.classList.remove('item--in-list');
+        this.list.append(dropElem);
     }
 };

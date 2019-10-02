@@ -20,7 +20,7 @@
     font-weight: 400;
   }
 
-  &__close-btn {
+  &__toggle-btn {
     position: absolute;
     right: 25px;
     padding: 0;
@@ -34,7 +34,7 @@
     cursor: pointer;
   }
 
-  &--in-list .item__close-btn {
+  &--in-list .item__toggle-btn {
     transform: rotate(45deg);
   }
 }
