@@ -3,12 +3,54 @@ import Filter from "./filter";
 
 const template = require('../templates/item.hbs');
 
-export default function auth() {
-    VK.init({
-        apiId: 7134817
-    });
+export default class {
+    /**
+     * @param apiId {number} - идентификатор VK приложения
+     * @param version {string} - версия VK API
+     */
+    constructor(apiId, version) {
+        this.apiId = apiId;
+        this.version = version;
 
-    function auth() {
+        this.init();
+    }
+
+    init(){
+        (async () => {
+            try {
+                await this._auth();
+
+                const [me] = await this._callARI('users.get', {name_case: 'gen'});
+
+                const name = document.querySelector('.header__name');
+                name.innerHTML = me.first_name + ' ' + me.last_name;
+
+                const friends = await this._callARI('friends.get', {fields: 'photo_50'});
+
+                const list = document.querySelector('.your-friends__list');
+
+                friends.items.forEach(item => {
+                    const html = template(item);
+
+                    list.insertAdjacentHTML('beforeend', html);
+                });
+
+                const dnd = await new DnD();
+
+                const friendsFilter = new Filter('.js-list-search', '.js-drop-zone');
+                const listFilter = new Filter('.js-friends-search', '.js-list');
+
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+    }
+
+    _auth() {
+        VK.init({
+            apiId: this.apiId
+        });
+
         return new Promise((resolve, reject) => {
             VK.Auth.login((data) => {
                 if (data.session) {
@@ -22,10 +64,11 @@ export default function auth() {
 
     /**
      *
-     *
-     * */
-    function callARI(method, params) {
-        params.v = '5.8';
+     * @param method {string} - метод для работы с данными
+     * @param params {object} - набор входных параметров
+     */
+    _callARI(method, params) {
+        params.v = this.version;
 
         return new Promise((resolve, reject) => {
             VK.api(method, params, (data) => {
@@ -58,33 +101,4 @@ export default function auth() {
 //             list.insertAdjacentHTML('beforeend', html);
 //         });
 //     });
-
-    (async () => {
-        try {
-            await auth();
-
-            const [me] = await callARI('users.get', {name_case: 'gen'});
-
-            const name = document.querySelector('.header__name');
-            name.innerHTML = me.first_name + ' ' + me.last_name;
-
-            const friends = await callARI('friends.get', {fields: 'photo_50'});
-
-            const list = document.querySelector('.your-friends__list');
-
-            friends.items.forEach(item => {
-                const html = template(item);
-
-                list.insertAdjacentHTML('beforeend', html);
-            });
-
-            const dnd = await new DnD();
-
-            const friendsFilter = new Filter('.js-list-search', '.js-drop-zone');
-            const listFilter = new Filter('.js-friends-search', '.js-list');
-
-        } catch (e) {
-            console.error(e);
-        }
-    })();
 };
