@@ -67,7 +67,6 @@ export default class {
      *
      * @param method {string} - метод для работы с данными
      * @param params {object} - набор входных параметров
-     * @return {Promise}
      */
     _callARI(method, params) {
         params.v = this.version;
@@ -100,7 +99,7 @@ export default class {
 
             this._renderFriends(this.targetZone, this.newListData);
         } else {
-            this.fullListData = friends.items;
+            this.fullListData = friends.item;
         }
 
         this._renderFriends(this.sourceZone, this.fullListData);
