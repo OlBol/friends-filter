@@ -30,7 +30,7 @@ export default class {
 
                 await this._getData();
 
-                this._renderFriends(this.sourceZone, this.fullListData);
+                // this._renderFriends(this.sourceZone, this.fullListData);
 
                 const dnd = new DnD();
 
@@ -44,6 +44,10 @@ export default class {
             }
         })();
     }
+
+    /**
+     * @return {Promise}
+     */
 
     _auth() {
         VK.init({
@@ -65,6 +69,7 @@ export default class {
      *
      * @param method {string} - метод для работы с данными
      * @param params {object} - набор входных параметров
+     * @return {Promise}
      */
     _callARI(method, params) {
         params.v = this.version;
@@ -97,8 +102,10 @@ export default class {
 
             this._renderFriends(this.targetZone, this.newListData);
         } else {
-            this.fullListData = friends.item;
+            this.fullListData = friends.items;
         }
+
+        this._renderFriends(this.sourceZone, this.fullListData);
     }
 
     _renderFriends(list, dataList) {

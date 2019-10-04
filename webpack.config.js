@@ -5,7 +5,7 @@ module.exports = {
     entry: './src/index.js',
 
     output: {
-        filename: "./js/bundle.js"
+        filename: "./bundle.js"
     },
 
     devServer: {
@@ -13,8 +13,6 @@ module.exports = {
     },
 
     devtool: 'source-map',
-
-    mode: "production",
 
     module: {
         rules: [{
