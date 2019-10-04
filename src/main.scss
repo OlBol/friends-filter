@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
 
 @import "scss/item";
 
@@ -22,10 +22,13 @@ svg {
 
 .main {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+
     background: linear-gradient(to bottom, #57375c 0%, #79445e 50%, #9a4f63 100%);
 
     @media (min-width: 680px) {
-        display: flex;
+        flex-direction: row;
     }
 }
 
@@ -38,7 +41,7 @@ svg {
 .header__title {
     margin: 0;
     padding: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     font-size: 24px;
     color: #000;
@@ -50,7 +53,7 @@ svg {
     border: 1px solid #57375c;
     border-radius: 20px;
     background-color: rgba(248, 248, 248, 0.5);
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 700;
     font-size: 20px;
     color: #57375c;
@@ -60,7 +63,7 @@ svg {
 .title {
     margin: 0;
     padding: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: 500;
     font-size: 18px;
     text-align: center;
@@ -68,12 +71,24 @@ svg {
 }
 
 .your-friends {
-    flex-basis: 50%;
+    flex-basis: 400px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+
+    @media (min-width: 680px) {
+        flex-basis: 50%;
+        overflow: auto;
+    }
+
+    &__container {
+        flex-grow: 1;
+        background-color: #fff;
+    }
+
 
     &__list-block {
-        height: calc(100vh - 195px);
+        height: calc(100vh - 190px);
         overflow: scroll;
     }
 
@@ -82,46 +97,40 @@ svg {
     }
 }
 
-.your-friends__container {
-    flex-grow: 1;
-    background-color: #fff;
-
-}
-
 .friends-list {
     flex-basis: 50%;
 
+    &__list {
+        height: 100%;
+        padding: 0;
+    }
+
     &__list-block {
-        height: calc(100vh - 195px);
+        height: calc(100vh - 190px);
         overflow: scroll;
     }
 }
 
-.friends-list__list {
-    height: 100%;
-    padding: 0;
-}
-
 .search {
     position: relative;
-}
 
-.search__label {
-    position: absolute;
-    top: 55%;
-    left: 10px;
-    transform: translateY(-50%);
-}
+    &__label {
+        position: absolute;
+        top: 55%;
+        left: 10px;
+        transform: translateY(-50%);
+    }
 
-.search__input {
-    width: 100%;
-    padding: 18px 50px;
-    border: 0;
-    font-size: 16px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #dad3db;
+    &__input {
+        width: 100%;
+        padding: 18px 50px;
+        border: 0;
+        font-size: 16px;
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #dad3db;
 
-    &--your {
-        background-color: #f8f8f8;
+        &--your {
+            background-color: #f8f8f8;
+        }
     }
 }

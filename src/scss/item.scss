@@ -6,11 +6,6 @@
   color: #130b1a;
   cursor: move;
 
-  &--in-list {
-    color: #fff;
-    cursor: default;
-  }
-
   &__img {
     border-radius: 50%;
   }
@@ -34,8 +29,16 @@
     background-position: center center;
     cursor: pointer;
   }
+}
 
-  &--in-list .item__toggle-btn {
+
+.js-target-zone {
+  .item {
+    color: #fff;
+    cursor: default;
+  }
+
+  .item__toggle-btn {
     transform: rotate(45deg);
   }
 }

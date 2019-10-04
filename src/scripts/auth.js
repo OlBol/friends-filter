@@ -11,34 +11,33 @@ export default class {
     constructor(apiId, version) {
         this.apiId = apiId;
         this.version = version;
+        this.fullListData = [];
+        this.newListData = [];
+        this.savedFriends = JSON.parse(localStorage.savedFriends || '{}');
 
         this.init();
     }
 
     init(){
+        this.saveBtn = document.querySelector('.js-save-btn');
+        this.sourceZone = document.querySelector('.js-source-zone');
+        this.targetZone = document.querySelector('.js-target-zone');
+        this.name = document.querySelector('.header__name');
+
         (async () => {
             try {
                 await this._auth();
 
-                const [me] = await this._callARI('users.get', {name_case: 'gen'});
+                await this._getData();
 
-                const name = document.querySelector('.header__name');
-                name.innerHTML = me.first_name + ' ' + me.last_name;
+                this._renderFriends(this.sourceZone, this.fullListData);
 
-                const friends = await this._callARI('friends.get', {fields: 'photo_50'});
+                const dnd = new DnD();
 
-                const list = document.querySelector('.your-friends__list');
+                const friendsFilter = new Filter('.js-list-search', '.js-target-zone');
+                const listFilter = new Filter('.js-friends-search', '.js-source-zone');
 
-                friends.items.forEach(item => {
-                    const html = template(item);
-
-                    list.insertAdjacentHTML('beforeend', html);
-                });
-
-                const dnd = await new DnD();
-
-                const friendsFilter = new Filter('.js-list-search', '.js-drop-zone');
-                const listFilter = new Filter('.js-friends-search', '.js-list');
+                this._saveData();
 
             } catch (e) {
                 console.error(e);
@@ -81,24 +80,47 @@ export default class {
         });
     }
 
-// auth()
-//     .then(() => {
-//         return callARI('users.get', {name_case: 'gen'});
-//     })
-//     .then(([me]) => {
-//         const name = document.querySelector('.header__name');
-//
-//         name.innerHTML = me.first_name + ' ' + me.last_name;
-//
-//         return callARI('friends.get', {fields: 'photo_50'});
-//     })
-//     .then(friends => {
-//         const list = document.querySelector('.your-friends__list');
-//
-//         friends.items.forEach(item => {
-//             const html = template(item);
-//
-//             list.insertAdjacentHTML('beforeend', html);
-//         });
-//     });
+    async _getData() {
+        const [me] = await this._callARI('users.get', {name_case: 'gen'});
+        this.name.innerHTML = me.first_name + ' ' + me.last_name;
+
+        const friends = await this._callARI('friends.get', {fields: 'photo_50'});
+
+        if (this.savedFriends.length) {
+            friends.items.forEach(item => {
+                if (this.savedFriends.includes(String(item.id))) {
+                    this.newListData.push(item);
+                } else {
+                    this.fullListData.push(item);
+                }
+            });
+
+            this._renderFriends(this.targetZone, this.newListData);
+        } else {
+            this.fullListData = friends.item;
+        }
+    }
+
+    _renderFriends(list, dataList) {
+        dataList.forEach(item => {
+            const html = template(item);
+
+            list.insertAdjacentHTML('beforeend', html);
+        });
+    }
+
+    _saveData() {
+        this.saveBtn.addEventListener('click', () => {
+            this.savedFriends = [];
+
+            for (const item of this.targetZone.children) {
+                if (item.dataset.id) {
+                    const id = item.dataset.id;
+
+                    this.savedFriends.push(id);
+                }
+            }
+            localStorage.savedFriends = JSON.stringify(this.savedFriends || '{}')
+        });
+    }
 };

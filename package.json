@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --open --hot",
     "build": "webpack",
-    "eslint": "eslint src/index.js"
+    "eslint": "eslint src/index.js",
+    "stylelint": "stylelint src/main.scss"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "eslint": "^6.5.0",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
+    "stylelint": "^11.0.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0"

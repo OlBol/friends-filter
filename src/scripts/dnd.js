@@ -1,26 +1,25 @@
 export default class {
     constructor() {
-        this.list = document.querySelector('.js-list');
-        this.items = this.list.querySelectorAll('.js-item');
-        this.dropZone = document.querySelector('.js-drop-zone');
-        this.toggleBtn = document.querySelectorAll('.js-toggle-btn');
         this.dragSrcEl;
 
         this.init();
     }
 
     init() {
-        this._addDnDHandlers(this.list, this.dropZone);
+        this.targetZone = document.querySelector('.js-target-zone');
+        this.sourceZone = document.querySelector('.js-source-zone');
+        this.items = this.sourceZone.querySelectorAll('.js-item');
+        this.toggleBtn = document.querySelectorAll('.js-toggle-btn');
+
+        this._addDnDHandlers(this.sourceZone, this.targetZone);
 
         for (const btn of this.toggleBtn) {
             btn.addEventListener('click', () => {
                 const dropElem = btn.closest('li');
 
-                if (btn.classList.contains('in-list')) {
-                    btn.classList.remove('in-list');
+                if (btn.closest('.js-target-zone')) {
                     this._removeItemFromList(dropElem);
                 } else {
-                    btn.classList.add('in-list');
                     this._addItemToList(dropElem);
                 }
             });
@@ -32,8 +31,8 @@ export default class {
      * @param source {HTMLElement} - полный список друзей
      * @param target {HTMLElement} - новый список
      */
-    _addDnDHandlers(source, target) {
-        source.addEventListener('dragstart', (e) => {
+    _addDnDHandlers(sourceZone, targetZone) {
+        sourceZone.addEventListener('dragstart', (e) => {
             if (e.target.classList.contains('item')) {
                 this.dragSrcEl = e.target;
             } else {
@@ -41,15 +40,15 @@ export default class {
             }
         });
 
-        source.addEventListener('dragover', (e) => {
+        sourceZone.addEventListener('dragover', (e) => {
             e.preventDefault();
         });
 
-        target.addEventListener('dragover', (e) => {
+        targetZone.addEventListener('dragover', (e) => {
             e.preventDefault();
         });
 
-        target.addEventListener('drop', () => this._addItemToList(this.dragSrcEl));
+        targetZone.addEventListener('drop', () => this._addItemToList(this.dragSrcEl));
     }
 
     /**
@@ -58,8 +57,7 @@ export default class {
      */
     _addItemToList(dropElem) {
         dropElem.setAttribute('draggable', 'false');
-        dropElem.classList.add('item--in-list');
-        this.dropZone.append(dropElem);
+        this.targetZone.append(dropElem);
     }
 
     /**
@@ -68,7 +66,6 @@ export default class {
      */
     _removeItemFromList(dropElem) {
         dropElem.setAttribute('draggable', 'true');
-        dropElem.classList.remove('item--in-list');
-        this.list.append(dropElem);
+        this.sourceZone.append(dropElem);
     }
 };
