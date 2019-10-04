@@ -5,8 +5,7 @@ module.exports = {
     entry: './src/index.js',
 
     output: {
-        path: __dirname + 'dist',
-        filename: 'index.js'
+        filename: "./js/bundle.js"
     },
 
     devServer: {
@@ -15,14 +14,15 @@ module.exports = {
 
     devtool: 'source-map',
 
+    mode: "production",
+
     module: {
         rules: [{
             test: /\.scss$/,
-            use: [{
-                    loader: MiniCssExtractPlugin.loader
-                },
+            use: [
+                'style-loader',
                 'css-loader',
-                'postcss-loader'
+                'sass-loader'
             ]
         },
         {
@@ -36,6 +36,8 @@ module.exports = {
             title: 'Friends filter',
             template: './src/index.hbs'
         }),
-        new MiniCssExtractPlugin('styles.css')
+        new MiniCssExtractPlugin({
+            filename: "./css/style.bundle.css"
+        })
     ]
 };
