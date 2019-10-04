@@ -1,11 +1,12 @@
 const HTMLPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: './src/index.js',
 
     output: {
-        filename: "./js/bundle.js"
+        filename: "./bundle.js"
     },
 
     devServer: {
@@ -14,15 +15,22 @@ module.exports = {
 
     devtool: 'source-map',
 
-    mode: "production",
-
     module: {
         rules: [{
-            test: /\.scss$/,
+            test: /\.css$/,
             use: [
-                'style-loader',
-                'css-loader',
-                'sass-loader'
+                "style-loader", "css-loader",
+                {
+                    loader: "postcss-loader",
+                    options: {
+                        plugins: [
+                            autoprefixer({
+                                overrideBrowserslist:['last 4 version']
+                            })
+                        ],
+                        sourceMap: true
+                    }
+                }
             ]
         },
         {

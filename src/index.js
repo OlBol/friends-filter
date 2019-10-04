@@ -1,4 +1,4 @@
-import './main.scss';
+import './main.css';
 
 import Auth from './scripts/auth';
 
