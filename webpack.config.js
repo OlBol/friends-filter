@@ -6,7 +6,7 @@ module.exports = {
     entry: './src/index.js',
 
     output: {
-        filename: "./bundle.js"
+        filename: './bundle.js'
     },
 
     devServer: {
@@ -19,9 +19,9 @@ module.exports = {
         rules: [{
             test: /\.css$/,
             use: [
-                "style-loader", "css-loader",
+                'style-loader', 'css-loader',
                 {
-                    loader: "postcss-loader",
+                    loader: 'postcss-loader',
                     options: {
                         plugins: [
                             autoprefixer({
@@ -30,7 +30,8 @@ module.exports = {
                         ],
                         sourceMap: true
                     }
-                }
+                },
+                'sass-loader'
             ]
         },
         {
@@ -45,7 +46,7 @@ module.exports = {
             template: './src/index.hbs'
         }),
         new MiniCssExtractPlugin({
-            filename: "./css/style.bundle.css"
+            filename: './css/style.bundle.css'
         })
     ]
 };

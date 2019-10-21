@@ -7,7 +7,7 @@
     "dev": "webpack-dev-server --open --hot",
     "build": "webpack  --mode production --print-width=120 --parser html --write dist/*.html",
     "eslint": "eslint src/index.js",
-    "stylelint": "stylelint src/main.scss"
+    "stylelint": "stylelint src/main.css"
   },
   "author": "",
   "license": "ISC",
@@ -22,6 +22,9 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "stylelint": "^11.0.0",
+    "stylelint-config-airbnb": "0.0.0",
+    "stylelint-order": "^3.1.1",
+    "stylelint-scss": "^3.11.1",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.8",
     "webpack-dev-server": "^3.8.0"
