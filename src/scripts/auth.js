@@ -14,8 +14,6 @@ export default class {
         this.fullListData = [];
         this.newListData = [];
         this.savedFriends = JSON.parse(localStorage.savedFriends || '{}');
-
-        this.init();
     }
 
     init(){
@@ -24,23 +22,21 @@ export default class {
         this.targetZone = document.querySelector('.js-target-zone');
         this.name = document.querySelector('.header__name');
 
-        (async () => {
-            try {
-                await this._auth();
+       this._auth()
+           .then(() => this._getData())
+           .then(() => {
+               const dnd = new DnD();
+               dnd.init();
+           })
+           .then(() => {
+               const friendsFilter = new Filter('.js-list-search', '.js-target-zone');
+               const listFilter = new Filter('.js-friends-search', '.js-source-zone');
 
-                await this._getData();
-
-                const dnd = new DnD();
-
-                const friendsFilter = new Filter('.js-list-search', '.js-target-zone');
-                const listFilter = new Filter('.js-friends-search', '.js-source-zone');
-
-                this._saveData();
-
-            } catch (e) {
+               this._saveData();
+           })
+           .catch((e) => {
                 console.error(e);
-            }
-        })();
+            });
     }
 
     /**
@@ -53,7 +49,7 @@ export default class {
         });
 
         return new Promise((resolve, reject) => {
-            VK.Auth.login((data) => {
+            VK.Auth.login(data => {
                 if (data.session) {
                     resolve();
                 } else {
@@ -72,7 +68,7 @@ export default class {
         params.v = this.version;
 
         return new Promise((resolve, reject) => {
-            VK.api(method, params, (data) => {
+            VK.api(method, params, data => {
                 if (data.error) {
                     reject(data.error);
                 } else {
@@ -99,7 +95,7 @@ export default class {
 
             this._renderFriends(this.targetZone, this.newListData);
         } else {
-            this.fullListData = friends.item;
+            this.fullListData = friends.items;
         }
 
         this._renderFriends(this.sourceZone, this.fullListData);

@@ -1,8 +1,6 @@
 export default class {
     constructor() {
         this.dragSrcEl;
-
-        this.init();
     }
 
     init() {
