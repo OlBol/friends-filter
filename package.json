@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --hot",
+    "start": "webpack-dev-server --open --hot",
     "build": "webpack  --mode production --print-width=120 --parser html --write dist/*.html",
     "eslint": "eslint src/index.js",
     "stylelint": "stylelint src/main.css"

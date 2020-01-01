@@ -65,6 +65,18 @@ svg {
         font-size: 20px;
         color: #57375c;
         cursor: pointer;
+        transition: background-color .5s, color .5s;
+
+        &:hover {
+            color: #fff;
+            background-color: #57375c;
+        }
+
+        &:focus {
+            outline: none;
+            color: #fff;
+            background-color: #57375c;
+        }
     }
 }
 
@@ -138,6 +150,10 @@ svg {
 
         &--your {
             background-color: #f8f8f8;
+        }
+        
+        &--full {
+            color: #fff;
         }
     }
 }

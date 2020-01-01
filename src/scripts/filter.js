@@ -8,8 +8,6 @@ export default class {
         this.filterInput = document.querySelector(filterInput);
         this.friendsList = document.querySelector(list);
         this.items = this.friendsList.children;
-
-        this.init();
     }
 
     /**
@@ -46,11 +44,7 @@ export default class {
     _isMatching(full, chunk) {
         const regexp = new RegExp(chunk, 'i');
 
-        if (full.search(regexp) !== -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return full.search(regexp) !== -1;
 
     }
 };

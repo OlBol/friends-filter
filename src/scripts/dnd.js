@@ -26,8 +26,8 @@ export default class {
 
     /**
      * Навешивает события drag and drop на все элементы списка друзей
-     * @param source {HTMLElement} - полный список друзей
-     * @param target {HTMLElement} - новый список
+     * @param sourceZone {HTMLElement} - полный список друзей
+     * @param targetZone {HTMLElement} - новый список
      */
     _addDnDHandlers(sourceZone, targetZone) {
         sourceZone.addEventListener('dragstart', (e) => {

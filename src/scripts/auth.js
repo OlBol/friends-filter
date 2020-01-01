@@ -32,6 +32,8 @@ export default class {
                const friendsFilter = new Filter('.js-list-search', '.js-target-zone');
                const listFilter = new Filter('.js-friends-search', '.js-source-zone');
 
+               friendsFilter.init();
+               listFilter.init();
                this._saveData();
            })
            .catch((e) => {
@@ -63,6 +65,8 @@ export default class {
      *
      * @param method {string} - метод для работы с данными
      * @param params {object} - набор входных параметров
+     *
+     * @return {Promise}
      */
     _callARI(method, params) {
         params.v = this.version;
