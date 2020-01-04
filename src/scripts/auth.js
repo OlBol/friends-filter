@@ -1,4 +1,4 @@
-import DnD from './dnd.js'
+import DnD from './dnd'
 import Filter from "./filter";
 
 const template = require('../templates/item.hbs');
@@ -35,7 +35,9 @@ export default class {
                friendsFilter.init();
                listFilter.init();
                this._saveData();
-           })
+           }).then(() => {
+                console.log('done')
+            })
            .catch((e) => {
                 console.error(e);
             });
@@ -52,11 +54,7 @@ export default class {
 
         return new Promise((resolve, reject) => {
             VK.Auth.login(data => {
-                if (data.session) {
-                    resolve();
-                } else {
-                    reject(new Error('Не удалось авторизоваться!'));
-                }
+                data.session ? resolve() : reject(new Error('Не удалось авторизоваться!'));
             }, 2); // 2 - право доступа к списку друзей ВК
         });
     }
@@ -73,11 +71,7 @@ export default class {
 
         return new Promise((resolve, reject) => {
             VK.api(method, params, data => {
-                if (data.error) {
-                    reject(data.error);
-                } else {
-                    resolve(data.response);
-                }
+                data.error ? reject(data.error) : resolve(data.response);
             });
         });
     }

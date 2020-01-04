@@ -30,21 +30,21 @@ export default class {
      * @param targetZone {HTMLElement} - новый список
      */
     _addDnDHandlers(sourceZone, targetZone) {
+        targetZone.addEventListener('dragstart', (e) => {
+            e.target.classList.contains('item') ?
+                this.dragSrcEl = e.target :this.dragSrcEl = e.target.closest('li');
+        });
+
         sourceZone.addEventListener('dragstart', (e) => {
-            if (e.target.classList.contains('item')) {
-                this.dragSrcEl = e.target;
-            } else {
-                this.dragSrcEl = e.target.closest('li');
-            }
+            e.target.classList.contains('item') ?
+                this.dragSrcEl = e.target :this.dragSrcEl = e.target.closest('li');
         });
 
-        sourceZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
+        sourceZone.addEventListener('dragover', (e) => e.preventDefault());
 
-        targetZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-        });
+        targetZone.addEventListener('dragover', (e) => e.preventDefault());
+
+        sourceZone.addEventListener('drop', () => this._removeItemFromList(this.dragSrcEl));
 
         targetZone.addEventListener('drop', () => this._addItemToList(this.dragSrcEl));
     }
@@ -54,8 +54,7 @@ export default class {
      * @param dropElem {HTMLElement} - элемент списка
      */
     _addItemToList(dropElem) {
-        dropElem.setAttribute('draggable', 'false');
-        this.targetZone.append(dropElem);
+        this.targetZone.prepend(dropElem);
     }
 
     /**
@@ -63,7 +62,6 @@ export default class {
      * @param dropElem {HTMLElement} - элемент списка
      */
     _removeItemFromList(dropElem) {
-        dropElem.setAttribute('draggable', 'true');
-        this.sourceZone.append(dropElem);
+        this.sourceZone.prepend(dropElem);
     }
 };

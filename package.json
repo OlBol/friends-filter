@@ -2,11 +2,11 @@
   "name": "friends-filter",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "webpack-dev-server --open --hot",
     "build": "webpack  --mode production --print-width=120 --parser html --write dist/*.html",
-    "eslint": "eslint src/index.js",
+    "eslint": "eslint src/index.ts",
     "stylelint": "stylelint src/main.css"
   },
   "author": "",
@@ -34,6 +34,7 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
+    "@types/node": "^13.1.4",
     "cssnano": "^4.1.10",
     "handlebars": "^4.2.0",
     "handlebars-loader": "^1.7.1"

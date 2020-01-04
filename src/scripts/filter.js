@@ -28,11 +28,8 @@ export default class {
     _getData(item) {
         const name = item.querySelector('.item__name').textContent;
 
-        if (this._isMatching(name, this.filterInput.value)) {
-            item.style.display = 'block';
-        } else {
-            item.style.display = 'none';
-        }
+        this._isMatching(name, this.filterInput.value) ?
+            item.style.display = 'block' : item.style.display = 'none';
     }
 
     /**
