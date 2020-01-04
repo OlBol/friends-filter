@@ -1,0 +1,32 @@
+.search {
+  position: relative;
+}
+
+.search__label {
+  position: absolute;
+  top: 55%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.search__input {
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 18px 50px;
+  border: 0;
+  font-size: 16px;
+  background-color: rgba(255, 255, 255, .2);
+  color: $smoke-color;
+}
+
+.search__input--your {
+  background-color: $haze-color;
+}
+
+.search__input--full {
+  color: $white;
+
+  &::placeholder {
+    color: $smoke-color;
+  }
+}

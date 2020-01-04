@@ -1,6 +1,7 @@
 const HTMLPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
+const SpritePlugin = require(`svg-sprite-loader/plugin`);
 
 module.exports = {
     entry: './src/index.js',
@@ -37,6 +38,38 @@ module.exports = {
         {
             test: /\.hbs/,
             loader: 'handlebars-loader'
+        },
+        {
+            test: /\.(png|jpe?g|gif|woff2?)$/i,
+            loader: "file-loader",
+            options: {
+                name: "[hash].[ext]"
+            }
+        }, {
+            test: /\.svg$/,
+            use: [
+                {
+                    loader: "svg-sprite-loader",
+                    options: {
+                        extract: true,
+                        spriteFilename: svgPath => `sprite${svgPath.substr(-4)}`
+                    }
+                },
+                "svg-transform-loader",
+                {
+                    loader: "svgo-loader",
+                    options: {
+                        plugins: [
+                            { removeTitle: true },
+                            {
+                                removeAttrs: {
+                                    attrs: "(fill|stroke)"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
         }]
     },
 
@@ -47,6 +80,7 @@ module.exports = {
         }),
         new MiniCssExtractPlugin({
             filename: './css/style.bundle.css'
-        })
+        }),
+        new SpritePlugin()
     ]
 };

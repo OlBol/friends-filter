@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(to bottom, $mauve-color 0%, $plum-color 50%, $mulberry-color 100%);
+
+  @media (min-width: 680px) {
+    flex-direction: row;
+  }
+}
+
+.title {
+  margin: 0;
+  padding: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  text-align: center;
+  color: $white;
+}

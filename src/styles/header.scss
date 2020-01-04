@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__title {
+  margin: 0;
+  padding: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: $black;
+}
+
+.header__save-btn {
+  margin: 10px 20px;
+  padding: 10px 20px;
+  border: 1px solid $mauve-color;
+  border-radius: 20px;
+  background-color: rgba(248, 248, 248, .5);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: $mauve-color;
+  cursor: pointer;
+  transition: background-color .5s, color .5s;
+
+  &:hover {
+    color: $white;
+    background-color: $mulberry-color;
+  }
+
+  &:focus {
+    outline: none;
+    color: $white;
+    background-color: $mulberry-color;
+  }
+}

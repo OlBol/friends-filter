@@ -13,12 +13,12 @@
     <div class="wrapper">
         <header class="header">
             <h1 class="header__title">Другофильтр <span class="header__name"></span></h1>
-            <button type="button" class="header__save-btn js-save-btn">Сохранить</button>
+            <button type="button" class="header__save-btn js-save-btn" tabindex='1'>Сохранить</button>
         </header>
         <main class="main">
-            <div class="your-friends">
+            <div class="all-friends">
                 <h2 class="title">Ваши друзья</h2>
-                <div class="your-friends__container">
+                <div class="all-friends__container">
                     <form action="" class="search">
                         <label for="friendsSearch" class="search__label">
                             <svg height="24px" viewBox="0 0 24 24" width="24px" xmlns="http://www.w3.org/2000/svg">
@@ -26,14 +26,14 @@
                                 <path d="M0 0h24v24H0z" fill="none"></path>
                             </svg>
                         </label>
-                        <input type="search" id="friendsSearch" class="search__input search__input--your js-friends-search" placeholder="Поиск">
+                        <input type="search" id="friendsSearch" class="search__input search__input--your js-friends-search" placeholder="Поиск" tabindex='2'>
                     </form>
-                    <div class="your-friends__list-block">
-                        <ul class="your-friends__list js-source-zone"></ul>
+                    <div class="all-friends__list-block">
+                        <ul class="all-friends__list js-source-zone"></ul>
                     </div>
                 </div>
             </div>
-            <div class="friends-list">
+            <div class="friend-list">
                 <h2 class="title">Друзья в списке</h2>
                 <form action="" class="search">
                     <label for="listSearch" class="search__label">
@@ -42,10 +42,10 @@
                             <path d="M0 0h24v24H0z" fill="none"></path>
                         </svg>
                     </label>
-                    <input type="search" id="listSearch" class="search__input search__input--full js-list-search" placeholder="Поиск по списку">
+                    <input type="search" id="listSearch" class="search__input search__input--full js-list-search" placeholder="Поиск по списку" tabindex='3'>
                 </form>
-                <div class="friends-list__list-block">
-                    <ul class="friends-list__list js-target-zone"></ul>
+                <div class="friend-list__list-block">
+                    <ul class="friend-list__list js-target-zone"></ul>
                 </div>
             </div>
         </main>

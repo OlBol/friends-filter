@@ -1,0 +1,18 @@
+.friend-list {
+  max-width: 800px;
+  flex-basis: 50%;
+}
+
+.friend-list__list {
+  height: 100%;
+  padding: 0;
+}
+
+.friend-list__list-block {
+  height: calc(100vh - 190px);
+  overflow: scroll;
+
+  @media (min-width: 1600px) {
+    background-color: rgba(#ccc, .1);
+  }
+}
