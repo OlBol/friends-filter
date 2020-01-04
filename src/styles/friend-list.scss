@@ -1,6 +1,11 @@
 .friend-list {
   max-width: 800px;
-  flex-basis: 50%;
+  max-height: 50%;
+  flex-grow: 1;
+
+  @media (min-width: 768px) {
+    flex-basis: 50%;
+  }
 }
 
 .friend-list__list {
@@ -9,8 +14,12 @@
 }
 
 .friend-list__list-block {
-  height: calc(100vh - 190px);
+  height: calc(50vh - 110px);
   overflow: scroll;
+
+  @media (min-width: 768px) {
+    height: calc(100vh - 222px);
+  }
 
   @media (min-width: 1600px) {
     background-color: rgba(#ccc, .1);

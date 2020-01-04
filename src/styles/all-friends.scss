@@ -1,13 +1,18 @@
 .all-friends {
   max-width: 800px;
-  flex-basis: 50%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  max-height: 50%;
+  flex-grow: 1;
 
   @media (min-width: 680px) {
     flex-basis: 50%;
     overflow: auto;
+  }
+
+  @media (min-width: 768px) {
+    flex-basis: 50%;
   }
 }
 
@@ -17,8 +22,12 @@
 }
 
 .all-friends__list-block {
-  height: calc(100vh - 190px);
   overflow: scroll;
+  height: calc(50vh - 110px);
+
+  @media (min-width: 768px) {
+    height: calc(100vh - 222px);
+  }
 }
 
 .all-friends__list {

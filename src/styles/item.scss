@@ -1,14 +1,20 @@
 .item {
   position: relative;
-  padding: 10px 25px;
+  padding: 5px 20px;
   display: flex;
   align-items: center;
+  font-size: 1.4rem;
   color: $black;
   cursor: move;
   background-color: rgba($mauve-color, 0);
   transition: background-color .5s;
 
-  &:hover {
+  @media (min-width: 768px) {
+    padding: 10px 25px;
+    font-size: 1.6rem;
+  }
+
+    &:hover {
     background-color: rgba($mauve-color, .4);
   }
 }
@@ -18,7 +24,14 @@
 }
 
 .item__img {
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
+
+  @media (min-width: 768px) {
+    height: 50px;
+    width: 50px;
+  }
 }
 
 .item__name {
@@ -29,22 +42,42 @@
 
 .item__toggle-btn {
   position: absolute;
-  right: 25px;
+  right: 20px;
   padding: 0;
   border: 0;
-  height: 25px;
-  width: 25px;
-  background-image: url('images/plus.svg');
+  height: 22px;
+  width: 22px;
   background-color: transparent;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
   cursor: pointer;
+
+  @media (min-width: 768px) {
+    right: 25px;
+    height: 25px;
+    width: 25px;
+  }
+
+  &:focus {
+    outline-color: $gray-color;
+    box-shadow: 0 0 8px 5px $gray-color;
+  }
 }
 
 .friend-list__list .item__toggle-btn {
-  height: 27px;
-  width: 27px;
-  background-image: url('images/white-plus.svg');
+  height: 25px;
+  width: 25px;
+  fill: $white;
   transform: rotate(45deg);
+
+  @media (min-width: 768px) {
+    height: 27px;
+    width: 27px;
+  }
+
+  &:focus {
+    outline-color: $smoke-color;
+    box-shadow: 0 0 8px 5px $smoke-color;
+  }
 }
