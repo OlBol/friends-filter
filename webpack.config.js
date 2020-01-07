@@ -18,6 +18,14 @@ module.exports = {
 
     module: {
         rules: [{
+            test: /\.js$/,
+            loader: "babel-loader",
+            exclude: /node_modules/,
+            options: {
+                presets: ['@babel/preset-env'],
+                plugins: ["@babel/plugin-syntax-dynamic-import"]
+            }
+        }, {
             test: /\.scss$/,
             use: [
                 'style-loader', 'css-loader',
@@ -45,33 +53,8 @@ module.exports = {
             options: {
                 name: "[hash].[ext]"
             }
-        }, {
-            test: /\.svg$/,
-            use: [
-                {
-                    loader: "svg-sprite-loader",
-                    options: {
-                        extract: true,
-                        spriteFilename: svgPath => `sprite${svgPath.substr(-4)}`
-                    }
-                },
-                "svg-transform-loader",
-                {
-                    loader: "svgo-loader",
-                    options: {
-                        plugins: [
-                            { removeTitle: true },
-                            {
-                                removeAttrs: {
-                                    attrs: "(fill|stroke)"
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
-        }]
-    },
+        }
+    ]},
 
     plugins: [
         new HTMLPlugin({
