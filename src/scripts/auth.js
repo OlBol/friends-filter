@@ -1,7 +1,8 @@
 import DnD from './dnd'
 import Filter from "./filter";
+import Popup from "./popup";
 
-const template = require('../templates/item.hbs');
+const itemTemplate = require('../templates/item.hbs');
 
 export default class {
     /**
@@ -37,7 +38,10 @@ export default class {
                this._saveData();
             })
            .catch((e) => {
-                console.error(e);
+               const popup = new Popup();
+
+               popup.init();
+               console.error(e);
             });
     }
 
@@ -52,7 +56,7 @@ export default class {
 
         return new Promise((resolve, reject) => {
             VK.Auth.login(data => {
-                data.session ? resolve() : reject(new Error('Не удалось авторизоваться!'));
+                data.session ? resolve() : reject(new Error('Не удалось авторизоваться! Отключите в вашем браузере блокировку всплывающего окна.'));
             }, 2); // 2 - право доступа к списку друзей ВК
         });
     }
@@ -99,7 +103,7 @@ export default class {
 
     _renderFriends(list, dataList) {
         dataList.forEach(item => {
-            const html = template(item);
+            const html = itemTemplate(item);
 
             list.insertAdjacentHTML('beforeend', html);
         });

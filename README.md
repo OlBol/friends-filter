@@ -1,3 +1,7 @@
+# Приложение для создания списка друзей в ВК
+## Описание
+
+
 ##  Чтобы развернуть проект необходимо:
 ```sh
 $ git clone https://github.com/OlBol/friends-filter.git
@@ -10,7 +14,6 @@ $ npm i
 | Скрипт | Назначение |
 | ------ | ------ |
 | start | Запустить development-режим сбокри. |
-| build  | Сборка production-версии, все файлы будут доступны из директории **dist** |
 | eslint | Запустить проверку стиля js-кода. |
 | stylelint | Запустить проверку стиля scss-кода. |
 
@@ -23,3 +26,10 @@ $ npm run имя_скрипта
 ```sh
 $ yarn имя_скрипта
 ```
+
+### Stack
++ VK API
++ Vanila JavaScript
++ Handlebars
++ SCSS
++ Webpack 4

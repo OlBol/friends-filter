@@ -5,5 +5,7 @@
 !yarn.lock
 *.log
 out/
+dist/
+build/
 node_modules/
 coverage/
