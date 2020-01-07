@@ -35,8 +35,6 @@ export default class {
                friendsFilter.init();
                listFilter.init();
                this._saveData();
-           }).then(() => {
-                console.log('done')
             })
            .catch((e) => {
                 console.error(e);
