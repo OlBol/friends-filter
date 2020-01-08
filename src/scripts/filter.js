@@ -1,8 +1,8 @@
 export default class {
     /**
-     * Инициализация параметров
-     * @param filterInput {string} - селектор поля фильтрации
-     * @param list {string} - селектор списка
+     * Фильтрация элементов списка по имени.
+     * @param filterInput {string} - селектор поля фильтрации.
+     * @param list {string} - селектор списка.
      */
     constructor(filterInput, list) {
         this.filterInput = document.querySelector(filterInput);
@@ -11,7 +11,7 @@ export default class {
     }
 
     /**
-     * Главный метод. Навешивает событие на поле фильтрации
+     * Добавление события для поля фильтрации.
      */
     init() {
         this.filterInput.addEventListener('input', () => {
@@ -22,8 +22,9 @@ export default class {
     }
 
     /**
-     * Скорывает и показывает фильтрованные элементы списка
-     * @param item {HTMLElement} - элемент списка
+     * Скорывает и показывает отфильтрованные элементы списка.
+     * @param item {HTMLElement} - элемент списка.
+     * @private
      */
     _getData(item) {
         const name = item.querySelector('.item__name').textContent;
@@ -33,10 +34,11 @@ export default class {
     }
 
     /**
-     * Проверка на совпадение значения с именем
-     * @param full {string} - полное имя
-     * @param chunk {string} - введенное в поле поиска значение
-     * @return {boolean} - если значение хотя бы частично совпадает с именем, то true, если нет, false
+     * Проверка на совпадение значения поля с именем.
+     * @param full {string} - полное имя.
+     * @param chunk {string} - введенное в поле поиска значение.
+     * @return {boolean} - если значение хотя бы частично совпадает с именем, то true, если нет, false.
+     * @private
      */
     _isMatching(full, chunk) {
         const regexp = new RegExp(chunk, 'i');

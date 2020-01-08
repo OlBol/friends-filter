@@ -6,8 +6,9 @@ const itemTemplate = require('../templates/item.hbs');
 
 export default class {
     /**
-     * @param apiId {number} - идентификатор VK приложения
-     * @param version {string} - версия VK API
+     * Авторизация в VK.
+     * @param apiId {number} - идентификатор VK-приложения.
+     * @param version {string} - версия VK API.
      */
     constructor(apiId, version) {
         this.apiId = apiId;
@@ -27,6 +28,7 @@ export default class {
            .then(() => this._getData())
            .then(() => {
                const dnd = new DnD();
+
                dnd.init();
            })
            .then(() => {
@@ -46,9 +48,10 @@ export default class {
     }
 
     /**
+     * Авторизация в VK.
      * @return {Promise}
+     * @private
      */
-
     _auth() {
         VK.init({
             apiId: this.apiId
@@ -62,11 +65,11 @@ export default class {
     }
 
     /**
-     *
-     * @param method {string} - метод для работы с данными
-     * @param params {object} - набор входных параметров
-     *
+     * Обращение в VK API.
+     * @param method {string} - метод для работы с данными.
+     * @param params {object} - набор входных параметров.
      * @return {Promise}
+     * @private
      */
     _callARI(method, params) {
         params.v = this.version;
@@ -78,6 +81,10 @@ export default class {
         });
     }
 
+    /**
+     * Получение данных о друзьях пользователя.
+     * @private
+     */
     async _getData() {
         const [me] = await this._callARI('users.get', {name_case: 'gen'});
         this.name.innerHTML = me.first_name + ' ' + me.last_name;
@@ -101,7 +108,14 @@ export default class {
         this._renderFriends(this.sourceZone, this.fullListData);
     }
 
+    /**
+     * Вставляет элементы с нужный список друзей.
+     * @param list {HTMLElement} – список, в который будет происходить подстановка.
+     * @param dataList {object} – данные о друзях.
+     * @private
+     */
     _renderFriends(list, dataList) {
+        console.log(list, dataList);
         dataList.forEach(item => {
             const html = itemTemplate(item);
 
@@ -109,6 +123,10 @@ export default class {
         });
     }
 
+    /**
+     * Сохранение данных в localStorage о добавленных друзьях в список.
+     * @private
+     */
     _saveData() {
         this.saveBtn.addEventListener('click', () => {
             this.savedFriends = [];

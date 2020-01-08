@@ -1,8 +1,14 @@
 export default class {
+    /**
+     * Drag and drop для элементов списков.
+     */
     constructor() {
         this.dragSrcEl;
     }
 
+    /**
+     * Добавление собыия клика на кнопку добавления/удаления элементов из списка.
+     */
     init() {
         this.targetZone = document.querySelector('.js-target-zone');
         this.sourceZone = document.querySelector('.js-source-zone');
@@ -25,9 +31,10 @@ export default class {
     }
 
     /**
-     * Навешивает события drag and drop на все элементы списка друзей
-     * @param sourceZone {HTMLElement} - полный список друзей
-     * @param targetZone {HTMLElement} - новый список
+     * Добавление события drag and drop для всех элементов списка друзей.
+     * @param sourceZone {HTMLElement} - полный список друзей.
+     * @param targetZone {HTMLElement} - новый список.
+     * @private
      */
     _addDnDHandlers(sourceZone, targetZone) {
         targetZone.addEventListener('dragstart', (e) => {
@@ -50,16 +57,18 @@ export default class {
     }
 
     /**
-     * Добавляет перемещаемый элемент в новый список
-     * @param dropElem {HTMLElement} - элемент списка
+     * Добавление перемещаемого элемента из общего списка в новый.
+     * @param dropElem {HTMLElement} - элемент списка.
+     * @private
      */
     _addItemToList(dropElem) {
         this.targetZone.prepend(dropElem);
     }
 
     /**
-     * Удаляет перемещаемый элемент из нового списка
-     * @param dropElem {HTMLElement} - элемент списка
+     * Удаление перемещаемого элемента из нового списка в общий.
+     * @param dropElem {HTMLElement} - элемент списка.
+     * @private
      */
     _removeItemFromList(dropElem) {
         this.sourceZone.prepend(dropElem);
