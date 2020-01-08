@@ -1,15 +1,19 @@
 # Приложение для создания списка друзей в ВК
-## Описание
+### Доступный функционал
++ Можно создавать список друзей, перемещая элементы списка с помощью drag and drop или по клике на кнопку добавления.
++ Удалять из списка друзей можно с помощью drag and drop или по клике на кнопку удаления.
++ Друзей в списках можно фильтровать по имени.
++ Состояние приложения можно сохранить в LocalStorage.
 
 
-##  Чтобы развернуть проект необходимо:
+###  Чтобы развернуть проект необходимо:
 ```sh
-$ git clone https://github.com/OlBol/friends-filter.git
-$ cd friends-filter
-$ npm i
+$ git clone https://github.com/OlBol/friend-filter.git
+$ cd friend-filter
+$ npm i 
 ```
 
-## Скрипты package.json:
+### Скрипты package.json:
 
 | Скрипт | Назначение |
 | ------ | ------ |
@@ -28,7 +32,7 @@ $ yarn имя_скрипта
 ```
 
 ### Stack
-+ VK API
++ VK API 
 + Vanila JavaScript
 + Handlebars
 + SCSS
