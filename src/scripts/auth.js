@@ -1,78 +1,57 @@
-import DnD from './dnd'
-import Filter from "./filter";
-import Popup from "./popup";
+import dragAndDrop from './dragAndDrop'
+import filter from "./filter";
+import popup from "./popup";
+import itemTemplate from '../templates/item.hbs';
 
-const itemTemplate = require('../templates/item.hbs');
+/**
+ * VK authorization.
+ * @param apiId {number} – VK application id.
+ * @param vkVersion {string} – VK API version.
+ */
+export default function auth(apiId, vkVersion) {
+    const id = apiId;
+    const version = vkVersion;
+    const accessRight = 2;
+    let fullListData = [];
+    const newListData = [];
+    let savedFriends = JSON.parse(localStorage.savedFriends || '{}');
+    const saveBtn = document.querySelector('.js-save-btn');
+    const sourceZone = document.querySelector('.js-source-zone');
+    const targetZone = document.querySelector('.js-target-zone');
+    const name = document.querySelector('.header__name');
 
-export default class {
-    /**
-     * Авторизация в VK.
-     * @param apiId {number} - идентификатор VK-приложения.
-     * @param version {string} - версия VK API.
-     */
-    constructor(apiId, version) {
-        this.apiId = apiId;
-        this.version = version;
-        this.fullListData = [];
-        this.newListData = [];
-        this.savedFriends = JSON.parse(localStorage.savedFriends || '{}');
-    }
+    VK.init({
+        apiId: id
+    });
 
-    init(){
-        this.saveBtn = document.querySelector('.js-save-btn');
-        this.sourceZone = document.querySelector('.js-source-zone');
-        this.targetZone = document.querySelector('.js-target-zone');
-        this.name = document.querySelector('.header__name');
+    const auth = new Promise((resolve, reject) => {
+        VK.Auth.login(data => {
+            data.session
+                ? resolve()
+                : reject(new Error('Не удалось авторизоваться! Отключите в вашем браузере блокировку всплывающего окна.'));
+        }, accessRight);
+    });
 
-       this._auth()
-           .then(() => this._getData())
-           .then(() => {
-               const dnd = new DnD();
-
-               dnd.init();
-           })
-           .then(() => {
-               const friendsFilter = new Filter('.js-list-search', '.js-target-zone');
-               const listFilter = new Filter('.js-friends-search', '.js-source-zone');
-
-               friendsFilter.init();
-               listFilter.init();
-               this._saveData();
-            })
-           .catch((e) => {
-               const popup = new Popup();
-
-               popup.init();
-               console.error(e);
-            });
-    }
-
-    /**
-     * Авторизация в VK.
-     * @return {Promise}
-     * @private
-     */
-    _auth() {
-        VK.init({
-            apiId: this.apiId
+    auth.then(() => getData())
+        .then(() => dragAndDrop())
+        .then(() => {
+            filter('.js-list-search', '.js-target-zone');
+            filter('.js-friends-search', '.js-source-zone');
+            saveData();
+        })
+        .catch((e) => {
+            popup();
+            console.error(e);
         });
 
-        return new Promise((resolve, reject) => {
-            VK.Auth.login(data => {
-                data.session ? resolve() : reject(new Error('Не удалось авторизоваться! Отключите в вашем браузере блокировку всплывающего окна.'));
-            }, 2); // 2 - право доступа к списку друзей ВК
-        });
-    }
-
     /**
-     * Обращение в VK API.
-     * @param method {string} - метод для работы с данными.
-     * @param params {object} - набор входных параметров.
-     * @return {Promise}
-     * @private
+     * Call VK API.
+     * @param method {string} - method for working with data.
+     * @param params {object} - set of input parameters.
+     * @returns {Promise}
      */
-    _callARI(method, params) {
-        params.v = this.version;
+    function callAPI(method, params) {
+        params.v = version;
 
         return new Promise((resolve, reject) => {
             VK.api(method, params, data => {
@@ -82,40 +61,37 @@ export default class {
     }
 
     /**
-     * Получение данных о друзьях пользователя.
-     * @private
+     * Get user friend data.
      */
-    async _getData() {
-        const [me] = await this._callARI('users.get', {name_case: 'gen'});
-        this.name.innerHTML = me.first_name + ' ' + me.last_name;
+    async function getData() {
+        const [me] = await callAPI('users.get', {name_case: 'gen'});
+        name.innerHTML = me.first_name + ' ' + me.last_name;
 
-        const friends = await this._callARI('friends.get', {fields: 'photo_50'});
+        const friends = await callAPI('friends.get', {fields: 'photo_50'});
 
-        if (this.savedFriends.length) {
+        if (savedFriends.length) {
             friends.items.forEach(item => {
-                if (this.savedFriends.includes(String(item.id))) {
-                    this.newListData.push(item);
+                if (savedFriends.includes(String(item.id))) {
+                    newListData.push(item);
                 } else {
-                    this.fullListData.push(item);
+                    fullListData.push(item);
                 }
             });
 
-            this._renderFriends(this.targetZone, this.newListData);
+            renderFriends(targetZone, newListData);
         } else {
-            this.fullListData = friends.items;
+            fullListData = friends.items;
         }
 
-        this._renderFriends(this.sourceZone, this.fullListData);
+        renderFriends(sourceZone, fullListData);
     }
 
     /**
-     * Вставляет элементы с нужный список друзей.
-     * @param list {HTMLElement} – список, в который будет происходить подстановка.
-     * @param dataList {object} – данные о друзях.
-     * @private
+     * Paste items into one of two friend list.
+     * @param list {HTMLElement} – list to insert items.
+     * @param dataList {object} – friend data.
      */
-    _renderFriends(list, dataList) {
-        console.log(list, dataList);
+    function renderFriends(list, dataList) {
         dataList.forEach(item => {
             const html = itemTemplate(item);
 
@@ -124,21 +100,21 @@ export default class {
     }
 
     /**
-     * Сохранение данных в localStorage о добавленных друзьях в список.
-     * @private
+     * Save data to localStorage about added friends to the list.
      */
-    _saveData() {
-        this.saveBtn.addEventListener('click', () => {
-            this.savedFriends = [];
+    function saveData() {
+        saveBtn.addEventListener('click', () => {
+            savedFriends = [];
 
-            for (const item of this.targetZone.children) {
+            for (const item of targetZone.children) {
                 if (item.dataset.id) {
                     const id = item.dataset.id;
 
-                    this.savedFriends.push(id);
+                    savedFriends.push(id);
                 }
             }
-            localStorage.savedFriends = JSON.stringify(this.savedFriends || '{}')
+            localStorage.savedFriends = JSON.stringify(savedFriends || '{}')
         });
     }
-};
+}
+

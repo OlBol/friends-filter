@@ -1,6 +1,7 @@
 import './main.scss';
+import auth from './scripts/auth';
 
-import Auth from './scripts/auth';
+const appId = 7134817;
+const APIVersion = '5.8';
 
-const auth = new Auth(7134817, '5.8');
-auth.init();
+auth(appId, APIVersion);

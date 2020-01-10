@@ -1,36 +1,33 @@
-export default class {
-    /**
-     * Фильтрация элементов списка по имени.
-     * @param filterInput {string} - селектор поля фильтрации.
-     * @param list {string} - селектор списка.
-     */
-    constructor(filterInput, list) {
-        this.filterInput = document.querySelector(filterInput);
-        this.friendsList = document.querySelector(list);
-        this.items = this.friendsList.children;
-    }
+/**
+ * Фильтрация элементов списка по имени.
+ * @param input {string} - селектор поля фильтрации.
+ * @param list {string} - селектор списка.
+ */
+export default function filter(input, list) {
+    const filterInput = document.querySelector(input);
+    const friendsList = document.querySelector(list);
+    const items = friendsList.children;
 
     /**
      * Добавление события для поля фильтрации.
      */
-    init() {
-        this.filterInput.addEventListener('input', () => {
-            for (const item of this.items) {
-                this._getData(item);
-            }
-        });
-    }
+    filterInput.addEventListener('input', () => {
+        for (const item of items) {
+            getData(item);
+        }
+    });
 
     /**
      * Скорывает и показывает отфильтрованные элементы списка.
      * @param item {HTMLElement} - элемент списка.
      * @private
      */
-    _getData(item) {
+    function getData(item) {
         const name = item.querySelector('.item__name').textContent;
 
-        this._isMatching(name, this.filterInput.value) ?
-            item.style.display = 'block' : item.style.display = 'none';
+        isMatching(name, filterInput.value)
+            ? item.style.display = 'block'
+            : item.style.display = 'none';
     }
 
     /**
@@ -40,10 +37,10 @@ export default class {
      * @return {boolean} - если значение хотя бы частично совпадает с именем, то true, если нет, false.
      * @private
      */
-    _isMatching(full, chunk) {
+    function isMatching(full, chunk) {
         const regexp = new RegExp(chunk, 'i');
 
         return full.search(regexp) !== -1;
 
     }
-};
+}
