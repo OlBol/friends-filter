@@ -1,3 +1,5 @@
+import { config } from './config';
+
 /**
  * @description Call VK API.
  * @param method {string} - method for working with data.
@@ -5,7 +7,7 @@
  * @returns {Promise}
  */
 export default function callAPI(method, params) {
-    params.v = '5.8';
+    params.v = config.version;
 
     return new Promise((resolve, reject) => {
         VK.api(method, params, data => {
