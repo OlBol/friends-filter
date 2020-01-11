@@ -1,32 +1,29 @@
 import popupTemplate from '../templates/popup.hbs';
 
 /**
- * Создание попапа с оповещением об ошибке авторизации.
+ * @description Create a popup with notification of authorization error..
  */
 export default function popup() {
     const body = document.body;
     const html = popupTemplate();
-    let popup = null;
 
     body.insertAdjacentHTML('beforeend', html);
     body.style.overflow = 'hidden';
 
-    bindEvents();
+    const popup = document.querySelector('.js-popup');
+    const wrapper = popup.querySelector('.js-popup-wrapper');
+    const btn = popup.querySelector('.js-close-popup');
 
-    function bindEvents() {
-        popup = document.querySelector('.js-popup');
-        const wrapper = popup.querySelector('.js-popup-wrapper');
-        const btn = popup.querySelector('.js-close-popup');
+    btn.addEventListener('click', () => closePopup());
 
-        btn.addEventListener('click', () => closePopup());
+    popup.addEventListener('click', (event) => {
+        const isClickInside = wrapper.contains(event.target);
+        if (!isClickInside) closePopup();
+    });
 
-        popup.addEventListener('click', (event) => {
-            const isClickInside = wrapper.contains(event.target);
-
-            if (!isClickInside) closePopup();
-        });
-    }
-
+    /**
+     * @description Close popup.
+     */
     function closePopup() {
         popup.style.display = 'none';
         body.style.overflow = 'auto';

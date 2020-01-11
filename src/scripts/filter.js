@@ -1,16 +1,13 @@
 /**
- * Фильтрация элементов списка по имени.
- * @param input {string} - селектор поля фильтрации.
- * @param list {string} - селектор списка.
+ * @description Filter items by name.
+ * @param input {string} - filter field selector.
+ * @param list {string} - list selector.
  */
 export default function filter(input, list) {
     const filterInput = document.querySelector(input);
     const friendsList = document.querySelector(list);
     const items = friendsList.children;
 
-    /**
-     * Добавление события для поля фильтрации.
-     */
     filterInput.addEventListener('input', () => {
         for (const item of items) {
             getData(item);
@@ -18,9 +15,8 @@ export default function filter(input, list) {
     });
 
     /**
-     * Скорывает и показывает отфильтрованные элементы списка.
-     * @param item {HTMLElement} - элемент списка.
-     * @private
+     * @description Hide and show filtered list items.
+     * @param item {HTMLElement} - list item.
      */
     function getData(item) {
         const name = item.querySelector('.item__name').textContent;
@@ -31,11 +27,10 @@ export default function filter(input, list) {
     }
 
     /**
-     * Проверка на совпадение значения поля с именем.
-     * @param full {string} - полное имя.
-     * @param chunk {string} - введенное в поле поиска значение.
-     * @return {boolean} - если значение хотя бы частично совпадает с именем, то true, если нет, false.
-     * @private
+     * @description Check if the name of the field matches.
+     * @param full {string} - full name.
+     * @param chunk {string} - the value entered in the search field.
+     * @returns {boolean} – if the value at least partially matches the name, then true, if not, false.
      */
     function isMatching(full, chunk) {
         const regexp = new RegExp(chunk, 'i');

@@ -1,5 +1,5 @@
 /**
- * Drag and drop для элементов списков.
+ * @description Drag and drop effects for list items.
  */
 export default function dragAndDrop() {
     let dragSrcEl = null;
@@ -7,47 +7,33 @@ export default function dragAndDrop() {
     const sourceZone = document.querySelector('.js-source-zone');
     const toggleBtn = document.querySelectorAll('.js-toggle-btn');
 
-    addDnDHandlers(sourceZone, targetZone);
+    targetZone.addEventListener('dragstart', (e) => {
+        e.target.classList.contains('item')
+            ? dragSrcEl = e.target
+            : dragSrcEl = e.target.closest('li');
+    });
+
+    sourceZone.addEventListener('dragstart', (e) => {
+        e.target.classList.contains('item')
+            ? dragSrcEl = e.target
+            : dragSrcEl = e.target.closest('li');
+    });
+
+    sourceZone.addEventListener('dragover', (e) => e.preventDefault());
+
+    targetZone.addEventListener('dragover', (e) => e.preventDefault());
+
+    sourceZone.addEventListener('drop', () => sourceZone.prepend(dragSrcEl));
+
+    targetZone.addEventListener('drop', () => targetZone.prepend(dragSrcEl));
 
     for (const btn of toggleBtn) {
         btn.addEventListener('click', () => {
             const dropElem = btn.closest('li');
 
-            if (btn.closest('.js-target-zone')) {
-                removeItemFromList(dropElem);
-            } else {
-                addItemToList(dropElem);
-            }
+            btn.closest('.js-target-zone')
+                ? sourceZone.prepend(dropElem)
+                : targetZone.prepend(dropElem);
         });
-    }
-
-    function addDnDHandlers(sourceZone, targetZone) {
-        targetZone.addEventListener('dragstart', (e) => {
-            e.target.classList.contains('item')
-                ? dragSrcEl = e.target
-                : dragSrcEl = e.target.closest('li');
-        });
-
-        sourceZone.addEventListener('dragstart', (e) => {
-            e.target.classList.contains('item')
-                ? dragSrcEl = e.target
-                : dragSrcEl = e.target.closest('li');
-        });
-
-        sourceZone.addEventListener('dragover', (e) => e.preventDefault());
-
-        targetZone.addEventListener('dragover', (e) => e.preventDefault());
-
-        sourceZone.addEventListener('drop', () => removeItemFromList(dragSrcEl));
-
-        targetZone.addEventListener('drop', () => addItemToList(dragSrcEl));
-    }
-
-    function addItemToList(dropElem) {
-        targetZone.prepend(dropElem);
-    }
-
-    function removeItemFromList(dropElem) {
-        sourceZone.prepend(dropElem);
     }
 };
