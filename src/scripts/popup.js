@@ -1,46 +1,31 @@
-const popupTemplate = require('../templates/popup.hbs');
+import popupTemplate from '../templates/popup.hbs';
 
-export default class  {
-    /**
-     * Создание попапа с оповещением об ошибке авторизации.
-     */
-    init() {
-        this.body = document.body;
-        const html = popupTemplate();
+/**
+ * @description Create a popup with notification of authorization error..
+ */
+export default function popup() {
+    const body = document.body;
+    const html = popupTemplate();
 
-        this.body.insertAdjacentHTML('beforeend', html);
-        this.body.style.overflow = 'hidden';
+    body.insertAdjacentHTML('beforeend', html);
+    body.style.overflow = 'hidden';
 
-        this._bindEvents();
+    const popup = document.querySelector('.js-popup');
+    const wrapper = popup.querySelector('.js-popup-wrapper');
+    const btn = popup.querySelector('.js-close-popup');
 
-    }
+    btn.addEventListener('click', () => closePopup());
 
-    /**
-     * Вызов скрытия попапа при книке на вноку закрытия или на поля вне попапа.
-     * @private
-     */
-    _bindEvents() {
-        this.popup = document.querySelector('.js-popup');
-        const wrapper = this.popup.querySelector('.js-popup-wrapper');
-        const btn = this.popup.querySelector('.js-close-popup');
-
-        btn.addEventListener('click', () => this._closePopup());
-
-        this.popup.addEventListener('click', (event) => {
-            const isClickInside = wrapper.contains(event.target);
-
-            if (!isClickInside) {
-                this._closePopup();
-            }
-        });
-    }
+    popup.addEventListener('click', (event) => {
+        const isClickInside = wrapper.contains(event.target);
+        if (!isClickInside) closePopup();
+    });
 
     /**
-     * Скрытие попапа.
-     * @private
+     * @description Close popup.
      */
-    _closePopup() {
-        this.popup.style.display = 'none';
-        this.body.style.overflow = 'auto';
+    function closePopup() {
+        popup.style.display = 'none';
+        body.style.overflow = 'auto';
     }
 }

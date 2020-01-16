@@ -19,10 +19,10 @@ module.exports = {
     module: {
         rules: [{
             test: /\.js$/,
-            loader: "babel-loader",
+            loader: 'babel-loader',
             exclude: /node_modules/,
             options: {
-                plugins: ["@babel/plugin-syntax-dynamic-import"]
+                plugins: ['@babel/plugin-syntax-dynamic-import']
             }
         }, {
             test: /\.scss$/,
@@ -48,9 +48,9 @@ module.exports = {
         },
         {
             test: /\.(png|jpe?g|gif|woff2?)$/i,
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-                name: "[hash].[ext]"
+                name: '[hash].[ext]'
             }
         }
     ]},

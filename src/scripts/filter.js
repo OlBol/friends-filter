@@ -1,49 +1,41 @@
-export default class {
-    /**
-     * Фильтрация элементов списка по имени.
-     * @param filterInput {string} - селектор поля фильтрации.
-     * @param list {string} - селектор списка.
-     */
-    constructor(filterInput, list) {
-        this.filterInput = document.querySelector(filterInput);
-        this.friendsList = document.querySelector(list);
-        this.items = this.friendsList.children;
-    }
+/**
+ * @description Filter items by name.
+ * @param input {string} - filter field selector.
+ * @param list {string} - list selector.
+ */
+export default function filter(input, list) {
+    const filterInput = document.querySelector(input);
+    const friendsList = document.querySelector(list);
+    const items = friendsList.children;
+
+    filterInput.addEventListener('input', () => {
+        for (const item of items) {
+            getData(item);
+        }
+    });
 
     /**
-     * Добавление события для поля фильтрации.
+     * @description Hide and show filtered list items.
+     * @param item {HTMLElement} - list item.
      */
-    init() {
-        this.filterInput.addEventListener('input', () => {
-            for (const item of this.items) {
-                this._getData(item);
-            }
-        });
-    }
-
-    /**
-     * Скорывает и показывает отфильтрованные элементы списка.
-     * @param item {HTMLElement} - элемент списка.
-     * @private
-     */
-    _getData(item) {
+    function getData(item) {
         const name = item.querySelector('.item__name').textContent;
 
-        this._isMatching(name, this.filterInput.value) ?
-            item.style.display = 'block' : item.style.display = 'none';
+        isMatching(name, filterInput.value)
+            ? item.style.display = 'block'
+            : item.style.display = 'none';
     }
 
     /**
-     * Проверка на совпадение значения поля с именем.
-     * @param full {string} - полное имя.
-     * @param chunk {string} - введенное в поле поиска значение.
-     * @return {boolean} - если значение хотя бы частично совпадает с именем, то true, если нет, false.
-     * @private
+     * @description Check if the name of the field matches.
+     * @param full {string} - full name.
+     * @param chunk {string} - the value entered in the search field.
+     * @returns {boolean} – if the value at least partially matches the name, then true, if not, false.
      */
-    _isMatching(full, chunk) {
+    function isMatching(full, chunk) {
         const regexp = new RegExp(chunk, 'i');
 
         return full.search(regexp) !== -1;
 
     }
-};
+}

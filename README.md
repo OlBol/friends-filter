@@ -8,9 +8,9 @@
 
 ###  Чтобы развернуть проект необходимо:
 ```sh
-$ git clone https://github.com/OlBol/friends-filter.git
-$ cd friends-filter
-$ npm i
+$ git clone https://github.com/OlBol/friend-filter.git
+$ cd friend-filter
+$ npm i 
 ```
 
 ### Скрипты package.json:
