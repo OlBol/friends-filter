@@ -3,11 +3,10 @@
  * @param apiId {number} – VK application id.
  */
 export default function auth(apiId) {
-    const id = apiId;
     const accessRight = 2;
 
     VK.init({
-        apiId: id
+        apiId: apiId
     });
 
     return new Promise((resolve, reject) => {

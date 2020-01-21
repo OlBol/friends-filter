@@ -8,8 +8,8 @@
 
 ###  Чтобы развернуть проект необходимо:
 ```sh
-$ git clone https://github.com/OlBol/friend-filter.git
-$ cd friend-filter
+$ git clone https://github.com/OlBol/filter-of-friends.git
+$ cd filter-of-friends
 $ npm i 
 ```
 

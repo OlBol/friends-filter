@@ -2,6 +2,7 @@ const HTMLPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 const SpritePlugin = require(`svg-sprite-loader/plugin`);
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -11,7 +12,7 @@ module.exports = {
     },
 
     devServer: {
-        overlay: true
+        overlay: true,
     },
 
     devtool: 'source-map',
@@ -63,6 +64,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: './css/style.bundle.css'
         }),
-        new SpritePlugin()
+        new SpritePlugin(),
+        new FaviconsWebpackPlugin('./src/favicon.png')
     ]
 };

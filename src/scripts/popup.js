@@ -16,9 +16,9 @@ export default function popup() {
 
     btn.addEventListener('click', () => closePopup());
 
-    popup.addEventListener('click', (event) => {
-        const isClickInside = wrapper.contains(event.target);
-        if (!isClickInside) closePopup();
+    popup.addEventListener('click', ({ target }) => {
+        const isClickInside = wrapper.contains(target);
+        (!isClickInside) && closePopup();
     });
 
     /**
